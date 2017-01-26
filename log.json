@@ -1,17 +1,57 @@
 [
   {
     "type": "basic",
-    "question": "Tent",
-    "answer": "green"
+    "question": "What color is an orange?",
+    "answer": "orange"
   },
   {
     "type": "basic",
-    "question": "What is the largest ape",
-    "answer": "gigantapithicus"
+    "question": "Who is the king of the jungle?",
+    "answer": "lion"
   },
   {
     "type": "basic",
-    "question": "Who is the person",
-    "answer": "I am"
+    "question": "What is the capital of Jedi?",
+    "answer": "Jedi"
+  },
+  {
+    "type": "cloze",
+    "question": "Blueberries are  ... .",
+    "answer": "blue"
+  },
+  {
+    "type": "cloze",
+    "question": "Blue is a  ... .",
+    "answer": "color"
+  },
+  {
+    "type": "basic",
+    "question": "What is the largest land mammal to ever exist?",
+    "answer": "paraceratherium"
+  },
+  {
+    "type": "cloze",
+    "question": "Paraceratherium was the largest land  ...  to exist.",
+    "answer": "mammal"
+  },
+  {
+    "type": "basic",
+    "question": "What is the fear of fun?",
+    "answer": "cherophobia"
+  },
+  {
+    "type": "cloze",
+    "question": "The first alarm clock could only ring at  ...  am.",
+    "answer": "4"
+  },
+  {
+    "type": "basic",
+    "question": "Who is the pokemon hitmonlee based off?",
+    "answer": "Bruce Lee"
+  },
+  {
+    "type": "cloze",
+    "question": " ...  have 4 noses.",
+    "answer": "Slugs"
   }
 ]

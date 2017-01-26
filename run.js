@@ -48,11 +48,23 @@ var run = function(){
       		when: function(response){
       			return response.create === 'Basic';
       		}
+    	},{
+      		name: 'clozeHint',
+      		message: 'Write a statement inculding the answer.',
+      		when: function(response){
+      			return response.create === 'Clozecard';
+      		}
+    	},{
+      		name: 'clozeAnswer',
+      		message: 'Which part should be hidden? (Use exact syntex)',
+      		when: function(response){
+      			return response.create === 'Clozecard';
+      		}
     	}, {
     		type: 'list',
       		name: 'quiz',
       		message: 'What type of quiz?',
-      		choices: ['Basic', 'Clozecard', 'All', 'back'],
+      		choices: ['All', 'back'],
       		when: function(response){
       			return response.go === 'Quiz';
       	}
@@ -65,21 +77,35 @@ var run = function(){
 
 
 			case 'Create':
-				if (response.create === 'Basic'){
-					newCard = new FlashCard('basic',response.basicHint, response.basicAnswer);
-					console.log(newCard);
-					// newCard = (',' + response.basicHint + ',' + response.basicAnswer);
-					createBasic();
-				} else {
-					newCard = new FlashCard('cloze',response.basicHint, response.basicAnswer);
-					createCloze();
+				switch(response.create){
+					case 'Basic':
+						newCard = new FlashCard('basic',response.basicHint, response.basicAnswer);
+						createBasic();
+						console.log('Card created');
+						break;
+
+					case 'Clozecard':
+						newCard = new FlashCard('cloze',response.clozeHint, response.clozeAnswer);
+						createCloze();
+						break;
+
+					default:
+						run();
 				}
-				console.log('Card created');
+				
 			break;
 
 			case 'Quiz':
 				i=0;
-				quiz();
+				var type = response.quiz;
+				switch(type){
+					case 'All':
+						quiz();
+					break;
+
+					default:
+						run();
+				}
 			break;
 
 			case 'Quit':
@@ -94,27 +120,35 @@ var run = function(){
 }
 
 var createBasic = function(){
+	console.log(newCard.question);
+	console.log(newCard.answer);
 	log.push(newCard);
 	fs.writeFile('log.json', JSON.stringify(log, null, 2), function(err){
 		if (err){
 			return console.log(err);
 		}
-
-		console.log('Added succesfully');
 		run();
 	});
 }
 
 var createCloze = function(){
-	log.push(newCard);
-	fs.writeFile('log.json', JSON.stringify(log, null, 2), function(err){
-		if (err){
-			return console.log(err);
-		}
+	console.log(newCard.question);
+	console.log(newCard.answer);
+	var hold = newCard.question.split(newCard.answer);
+	if (hold.length === 1){
+		console.log('The answer was not found in the question, you may want to create a basic card');
+	} else {
+		newCard.question = hold[0] + ' ... ' + hold[1];
+		log.push(newCard);
+		fs.writeFile('log.json', JSON.stringify(log, null, 2), function(err){
+			if (err){
+				return console.log(err);
+			}
+			console.log('Card created');
 
-		console.log('Added succesfully');
-		run();
-	});
+			run();
+		});
+	}
 }
 
 var quiz = function(){
